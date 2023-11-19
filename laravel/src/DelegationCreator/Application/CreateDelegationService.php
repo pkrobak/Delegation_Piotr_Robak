@@ -4,7 +4,6 @@ namespace src\DelegationCreator\Application;
 
 use src\DelegationCreator\Domain\CreateDelegationRepositoryInterface;
 use src\DelegationCreator\Domain\DelegationCommand;
-use src\DelegationCreator\Domain\DelegationValueObject;
 use src\DelegationCreator\Domain\Exception\CountryDoesNotExistException;
 use src\DelegationCreator\Domain\Exception\EmployeeDoesntExistException;
 use src\DelegationCreator\Domain\Exception\InvalidDateException;

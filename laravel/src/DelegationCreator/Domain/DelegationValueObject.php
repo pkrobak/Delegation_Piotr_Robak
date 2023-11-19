@@ -17,23 +17,15 @@ class DelegationValueObject implements CreateDelegationInterface
      * @throws InvalidDateException
      */
     public function __construct(
-        string $startDate,
-        string $endDate,
+        \DateTimeImmutable $startDate,
+        \DateTimeImmutable $endDate,
         int    $employeeId,
         int    $countryId,
         int    $amountDue
     )
     {
-        try {
-            $this->startDate = new \DateTimeImmutable($startDate);
-        } catch (\Exception $exception) {
-            throw new InvalidDateException('Invalid start date format');
-        }
-        try {
-            $this->endDate = new \DateTimeImmutable($endDate);
-        } catch (\Exception $exception) {
-            throw new InvalidDateException('Invalid end date format');
-        }
+        $this->startDate = $startDate;
+        $this->endDate = $endDate;
         if ($this->startDate->getTimestamp() >= $this->endDate->getTimestamp()) {
             throw new InvalidDateException('Start date cannot be after end date');
         }

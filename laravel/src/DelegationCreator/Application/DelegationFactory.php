@@ -29,18 +29,30 @@ readonly class DelegationFactory
         if (!$this->employeeRepository->exists($command->employeeId)) {
             throw new EmployeeDoesntExistException('Employee with given ID doest not exists');
         }
-        $countryId = $this->countryRepository->findIdByCode($command->countryCode);
-        if ($countryId === null) {
+        $countryEntity = $this->countryRepository->findCountryByCode($command->countryCode);
+        if ($countryEntity === null) {
             throw new CountryDoesNotExistException('Country with given code does not exists');
         }
-        // in theory, we don't need above queries, but I want to show you where to put that kind of logic
+        // in theory, we don't need above queries because we validated it in form request,
+        // but I want to show you where to put that kind of logic
+
+        try {
+            $start = new \DateTimeImmutable($command->startDate);
+        } catch (\Exception $exception) {
+            throw new InvalidDateException('Invalid start date format');
+        }
+        try {
+            $end = new \DateTimeImmutable($command->startDate);
+        } catch (\Exception $exception) {
+            throw new InvalidDateException('Invalid end date format');
+        }
 
         return new DelegationValueObject(
-            $command->startDate,
-            $command->endDate,
+            $start,
+            $end,
             $command->employeeId,
-            $countryId,
-            0
+            $countryEntity->id,
+            $countryEntity->getAmount($start, $end)
         );
     }
 }

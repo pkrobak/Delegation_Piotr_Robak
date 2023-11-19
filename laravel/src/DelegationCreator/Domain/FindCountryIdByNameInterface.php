@@ -4,5 +4,5 @@ namespace src\DelegationCreator\Domain;
 
 interface FindCountryIdByNameInterface
 {
-    public function findIdByCode(string $countryCode): ?int;
+    public function findCountryByCode(string $countryCode): ?CountryEntity;
 }
