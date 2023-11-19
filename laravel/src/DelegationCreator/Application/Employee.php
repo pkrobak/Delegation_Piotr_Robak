@@ -1,9 +1,10 @@
 <?php
 
-namespace src\Employee\Application;
+namespace src\DelegationCreator\Application;
 
 use Illuminate\Database\Eloquent\Model;
 
 class Employee extends Model
 {
+
 }
