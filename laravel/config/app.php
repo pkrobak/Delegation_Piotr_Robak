@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
+use src\DelegationCreator\Application\DelegationProvider;
 use src\Employee\Application\EmployeeProvider;
 
 return [
@@ -170,6 +171,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         EmployeeProvider::class,
+        DelegationProvider::class,
     ])->toArray(),
 
     /*

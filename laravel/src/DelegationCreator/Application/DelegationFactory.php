@@ -2,6 +2,7 @@
 
 namespace src\DelegationCreator\Application;
 
+use DateTime;
 use src\DelegationCreator\Domain\DelegationCommand;
 use src\DelegationCreator\Domain\DelegationValueObject;
 use src\DelegationCreator\Domain\EmployeeExistsInterface;
@@ -33,7 +34,7 @@ readonly class DelegationFactory
         if ($countryEntity === null) {
             throw new CountryDoesNotExistException('Country with given code does not exists');
         }
-        // in theory, we don't need above queries because we validated it in form request,
+        // in theory, we don't need above queries because we validated it in form request and route model binding,
         // but I want to show you where to put that kind of logic
 
         try {
@@ -42,7 +43,7 @@ readonly class DelegationFactory
             throw new InvalidDateException('Invalid start date format');
         }
         try {
-            $end = new \DateTimeImmutable($command->startDate);
+            $end = new \DateTimeImmutable($command->endDate);
         } catch (\Exception $exception) {
             throw new InvalidDateException('Invalid end date format');
         }
@@ -52,7 +53,7 @@ readonly class DelegationFactory
             $end,
             $command->employeeId,
             $countryEntity->id,
-            $countryEntity->getAmount($start, $end)
+            $countryEntity->getAmount(new DateTime($command->startDate), new DateTime($command->endDate))
         );
     }
 }

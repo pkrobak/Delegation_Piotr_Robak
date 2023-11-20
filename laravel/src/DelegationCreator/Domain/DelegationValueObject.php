@@ -4,7 +4,7 @@ namespace src\DelegationCreator\Domain;
 
 use src\DelegationCreator\Domain\Exception\InvalidDateException;
 
-class DelegationValueObject implements CreateDelegationInterface
+readonly class DelegationValueObject implements CreateDelegationInterface
 {
 
     private \DateTimeImmutable $startDate;
@@ -22,11 +22,10 @@ class DelegationValueObject implements CreateDelegationInterface
         int    $employeeId,
         int    $countryId,
         int    $amountDue
-    )
-    {
+    ) {
         $this->startDate = $startDate;
         $this->endDate = $endDate;
-        if ($this->startDate->getTimestamp() >= $this->endDate->getTimestamp()) {
+        if ($this->startDate->getTimestamp() > $this->endDate->getTimestamp()) {
             throw new InvalidDateException('Start date cannot be after end date');
         }
         $this->employeeId = $employeeId;

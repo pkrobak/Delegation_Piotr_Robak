@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use src\DelegationCreator\UI\DelegationController;
 use src\Employee\UI\EmployeeController;
 
 /*
@@ -16,3 +17,4 @@ use src\Employee\UI\EmployeeController;
 */
 
 Route::post('employees', [EmployeeController::class, 'store']);
+Route::post('employees/{employee}', [DelegationController::class, 'store']);
