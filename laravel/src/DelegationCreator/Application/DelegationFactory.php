@@ -3,6 +3,7 @@
 namespace src\DelegationCreator\Application;
 
 use DateTime;
+use src\DelegationCreator\Domain\DayCalculation\DaysCollectionFactory;
 use src\DelegationCreator\Domain\DelegationCommand;
 use src\DelegationCreator\Domain\DelegationValueObject;
 use src\DelegationCreator\Domain\EmployeeExistsInterface;
@@ -16,7 +17,8 @@ readonly class DelegationFactory
 
     public function __construct(
         private FindCountryIdByNameInterface $countryRepository,
-        private EmployeeExistsInterface      $employeeRepository
+        private EmployeeExistsInterface      $employeeRepository,
+        private DaysCollectionFactory        $daysCollectionFactory
     ) {
     }
 
@@ -53,7 +55,11 @@ readonly class DelegationFactory
             $end,
             $command->employeeId,
             $countryEntity->id,
-            $countryEntity->getAmount(new DateTime($command->startDate), new DateTime($command->endDate))
+            $this->daysCollectionFactory->create(
+                new DateTime($command->startDate),
+                new DateTime($command->endDate),
+                $countryEntity->rate
+            )->sum()
         );
     }
 }
