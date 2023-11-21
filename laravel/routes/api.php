@@ -1,9 +1,9 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\DelegationCreator\UI\Http\Controllers\DelegationController;
+use App\DelegationList\UI\Http\Controllers\EmployeeDelegationController;
+use App\Employee\UI\Http\Controllers\EmployeeController;
 use Illuminate\Support\Facades\Route;
-use src\DelegationCreator\UI\DelegationController;
-use src\Employee\UI\EmployeeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,3 +18,4 @@ use src\Employee\UI\EmployeeController;
 
 Route::post('employees', [EmployeeController::class, 'store']);
 Route::post('employees/{employee}', [DelegationController::class, 'store']);
+Route::get('employees/{employee}/delegations', [EmployeeDelegationController::class, 'index']);

@@ -2,11 +2,11 @@
 
 namespace Tests\Feature;
 
+use App\DelegationCreator\Application\Country;
+use App\DelegationCreator\Application\Delegation;
+use App\DelegationCreator\Application\Employee;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
-use src\DelegationCreator\Application\Country;
-use src\DelegationCreator\Application\Delegation;
-use src\DelegationCreator\Application\Employee;
 use Symfony\Component\HttpFoundation\Request;
 use Tests\TestCase;
 

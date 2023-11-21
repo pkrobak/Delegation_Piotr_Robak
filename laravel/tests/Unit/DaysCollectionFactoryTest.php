@@ -2,12 +2,12 @@
 
 namespace Tests\Unit;
 
+use App\DelegationCreator\Domain\DayCalculation\Day;
+use App\DelegationCreator\Domain\DayCalculation\DayFactory;
+use App\DelegationCreator\Domain\DayCalculation\DaysCollection;
+use App\DelegationCreator\Domain\DayCalculation\DaysCollectionFactory;
 use Exception;
 use PHPUnit\Framework\TestCase;
-use src\DelegationCreator\Domain\DayCalculation\Day;
-use src\DelegationCreator\Domain\DayCalculation\DayFactory;
-use src\DelegationCreator\Domain\DayCalculation\DaysCollection;
-use src\DelegationCreator\Domain\DayCalculation\DaysCollectionFactory;
 
 class DaysCollectionFactoryTest extends TestCase
 {

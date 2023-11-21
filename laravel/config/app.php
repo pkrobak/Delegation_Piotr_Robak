@@ -1,9 +1,10 @@
 <?php
 
+use App\DelegationCreator\Application\DelegationProvider;
+use App\DelegationList\Application\EmployeeDelegationProvider;
+use App\Employee\Application\EmployeeProvider;
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
-use src\DelegationCreator\Application\DelegationProvider;
-use src\Employee\Application\EmployeeProvider;
 
 return [
 
@@ -172,6 +173,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         EmployeeProvider::class,
         DelegationProvider::class,
+        EmployeeDelegationProvider::class
     ])->toArray(),
 
     /*

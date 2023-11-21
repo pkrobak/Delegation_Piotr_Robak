@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use src\Employee\Application\Employee;
+use App\Employee\Application\Employee;
 use Symfony\Component\HttpFoundation\Request;
 use Tests\TestCase;
 
