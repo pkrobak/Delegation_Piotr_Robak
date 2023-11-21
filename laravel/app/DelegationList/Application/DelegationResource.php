@@ -24,7 +24,7 @@ class DelegationResource extends JsonResource
             'start' => $this->resource->getStart(),
             'end' => $this->resource->getEnd(),
             'country' => $this->resource->getCountryCode(),
-            'amount_due' => $this->resource->getAmountDue(),
+            'amount_due' => $this->resource->getAmountDue() / 100, // amount is in the GROSZE to does face with problem of floating
             'currency' => 'PLN', // here probably I would take it from country model, but it was not in a task scope
         ];
     }

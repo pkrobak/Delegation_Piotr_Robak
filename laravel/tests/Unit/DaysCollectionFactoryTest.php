@@ -37,7 +37,6 @@ class DaysCollectionFactoryTest extends TestCase
     {
         $collection = new DaysCollection();
         for ($i = 0; $i < 5; $i++) {
-            var_dump($i);
             $collection->add(new Day(1, false));
         }
         $this->assertEquals(5, $collection->sum());

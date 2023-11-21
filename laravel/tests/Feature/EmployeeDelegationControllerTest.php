@@ -38,14 +38,14 @@ class EmployeeDelegationControllerTest extends TestCase
         $delegation->employee_id = $employee->id;
         $delegation->starts_at = Carbon::now()->subDay();
         $delegation->ends_at = Carbon::now();
-        $delegation->amount_due = $this->faker->randomNumber(3);
+        $delegation->amount_due = $this->faker->randomNumber(4);
         $delegation->save();
         $delegation = new Delegation();
         $delegation->country_id = Country::first()->id;
         $delegation->employee_id = $employee->id;
         $delegation->starts_at = Carbon::now()->subDays(9);
         $delegation->ends_at = Carbon::now()->subDays(6);
-        $delegation->amount_due = $this->faker->randomNumber(3);
+        $delegation->amount_due = $this->faker->randomNumber(4);
         $delegation->save();
 
         $this->json(Request::METHOD_GET, 'api/employees/' . $employee->id . '/delegations')
