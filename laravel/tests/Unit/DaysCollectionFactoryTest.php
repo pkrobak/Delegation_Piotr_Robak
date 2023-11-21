@@ -4,7 +4,9 @@ namespace Tests\Unit;
 
 use Exception;
 use PHPUnit\Framework\TestCase;
+use src\DelegationCreator\Domain\DayCalculation\Day;
 use src\DelegationCreator\Domain\DayCalculation\DayFactory;
+use src\DelegationCreator\Domain\DayCalculation\DaysCollection;
 use src\DelegationCreator\Domain\DayCalculation\DaysCollectionFactory;
 
 class DaysCollectionFactoryTest extends TestCase
@@ -23,6 +25,34 @@ class DaysCollectionFactoryTest extends TestCase
         $factory = new DaysCollectionFactory(new DayFactory());
         $collection = $factory->create(new \DateTime($startDate), new \DateTime($endDate), $rate);
         $this->assertEquals($amount, $collection->sum());
+    }
+
+    public function test_sum_single()
+    {
+        $collection = new DaysCollection();
+        $collection->add(new Day(1, false));
+        $this->assertEquals(1, $collection->sum());
+    }
+    public function test_sum_multiple()
+    {
+        $collection = new DaysCollection();
+        for ($i = 0; $i < 5; $i++) {
+            var_dump($i);
+            $collection->add(new Day(1, false));
+        }
+        $this->assertEquals(5, $collection->sum());
+    }
+
+    public function test_sum_multiple_double()
+    {
+        $rate = 1;
+        $amount = 5;
+        $isDouble = true;
+        $collection = new DaysCollection();
+        for ($i = 0; $i < $amount; $i++) {
+            $collection->add(new Day($rate, $isDouble));
+        }
+        $this->assertEquals(($rate * $amount) * 2, $collection->sum());
     }
 
     public static function dateProvider(): array
@@ -58,10 +88,13 @@ class DaysCollectionFactoryTest extends TestCase
             // checks that does not work for reverse parameters
             [1, '2023-11-21 00:00:00', '2023-11-20 00:00:00', 0],
 
+            // checks calculation when start is beginning of the day and end day is included
+            [1, '2023-11-20 00:00:00', '2023-11-21 23:59:59', 2],
+
             // checks that count extra days properly
             [1, '2023-11-21 00:00:00', '2023-11-27 08:00:00', 5],
-            [1, '2023-11-20 00:00:00', '2023-11-28 08:00:00', 8],
-            [2, '2023-11-20 00:00:00', '2023-12-01 08:00:00', 15],
+            [1, '2023-11-20 00:00:00', '2023-11-28 08:00:00', 9],
+            [2, '2023-11-20 00:00:00', '2023-11-28 08:00:00', 18],
         ];
     }
 }

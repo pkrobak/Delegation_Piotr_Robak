@@ -13,8 +13,12 @@ class DayFactory
         DateTimeInterface $start,
         DateTimeInterface $end,
         int $increment,
-        int $lastIncrementValue
+        int $lastIncrementValue,
+        DateTimeInterface $modifiedEnd
     ): DayStrategyInterface {
+        if ($modifiedEnd->getTimestamp() === $comparedDate->getTimestamp()) {
+            return new SkippedDay();
+        }
         if ($increment === 0) {
             if ($this->shouldIncludeStartDay($start)) {
                 return new StandardDay();
@@ -22,6 +26,9 @@ class DayFactory
             return new SkippedDay();
         }
         if ($lastIncrementValue === $increment) {
+            if ($end->getTimestamp() === $comparedDate->getTimestamp()) {
+                return new SkippedDay();
+            }
             if ($this->shouldIncludeEndDay($end)) {
                 if ($increment > self::DAYS_AFTER_WHICH_IS_EXTRA_PRICE) {
                     return new ExtraDay();
@@ -31,10 +38,10 @@ class DayFactory
             }
             return new SkippedDay();
         }
-        if (!$this->isWorkDay($comparedDate)) {
+        if (!$this->isWorkDay($comparedDate) || in_array($increment, [0, $lastIncrementValue])) {
             return new SkippedDay();
         }
-        if ($increment > self::DAYS_AFTER_WHICH_IS_EXTRA_PRICE) {
+        if ($increment >= self::DAYS_AFTER_WHICH_IS_EXTRA_PRICE) {
             return new ExtraDay();
         }
 

@@ -18,9 +18,11 @@ class DaysCollection
     {
         return array_reduce(
             $this->days,
-            fn (int $carry, Day $day) => $carry + ($day->isDouble
-                ? $day->rate * 2
-                : $day->rate),
+            function (int $carry, Day $day) {
+                return $carry + ($day->isDouble
+                    ? $day->rate * 2
+                    : $day->rate);
+                },
             0
         );
     }

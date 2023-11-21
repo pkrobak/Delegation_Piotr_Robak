@@ -21,19 +21,21 @@ readonly class DaysCollectionFactory
         $currentDate = clone $start;
         $endCloned = clone $end;
         $endCloned->modify('midnight');
-        $maxIncrementValue = $currentDate->diff($endCloned)->days + 1;
+        $endCloned->modify('+1 day');
+        $maxIncrementValue = $currentDate->diff($endCloned)->days;
 
         while ($currentDate <= $endCloned) {
             $i++;
+
             $dayStrategy = $this->dayFactory->create(
                 $currentDate,
                 $start,
                 $end,
                 $i,
-                $maxIncrementValue
+                $maxIncrementValue,
+                $endCloned
             );
             if (!$dayStrategy->isSkipped()) {
-                var_dump(implode(' - ', [$dayStrategy->isDouble(), $i,  $currentDate->format('Y-m-d H:i:s')]));
                 $collection->add(new Day($rate, $dayStrategy->isDouble()));
             }
             $currentDate->modify('+1 day');
